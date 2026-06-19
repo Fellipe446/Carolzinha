@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Carolzinha... 🌹</title>
+    <title>Para Carolzinha... 🌸</title>
     <style>
         * {
             box-sizing: border-box;
@@ -14,8 +14,8 @@
         }
 
         body {
-            background-color: #0a0a0a;
-            color: #ffffff;
+            background: linear-gradient(135deg, #faf6f7 0%, #fceef2 100%);
+            color: #2b2b2b;
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -24,20 +24,20 @@
             position: relative;
         }
 
-        /* Menu de 3 pontos do Criador (Discreto) */
+        /* Menu de 3 pontos do Criador */
         .admin-trigger {
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
-            color: #222;
+            color: #bfa3a8;
             z-index: 1000;
             padding: 10px;
             transition: color 0.3s;
         }
         .admin-trigger:hover {
-            color: #ff2a5f;
+            color: #ff5e7e;
         }
 
         /* Telas Principais */
@@ -48,47 +48,39 @@
             align-items: center;
             text-align: center;
             width: 88%;
-            max-width: 420px;
-            padding: 40px 30px;
+            max-width: 400px;
+            padding: 40px 25px;
             border-radius: 24px;
             z-index: 10;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s ease;
         }
 
         .hidden {
             display: none !important;
-            opacity: 0;
-            transform: scale(0.9);
         }
 
-        /* Estética Premium Dark */
-        .card-premium {
-            background: rgba(18, 18, 18, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+        /* Estética Romântica Premium Clean */
+        .card-romantic {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 35px rgba(224, 182, 191, 0.3);
         }
 
         h2 {
             font-size: 24px;
             font-weight: 700;
-            letter-spacing: -0.5px;
             line-height: 1.4;
             margin-bottom: 30px;
+            color: #3a3a3a;
         }
 
-        .highlight-text {
-            background: linear-gradient(135deg, #ff2a5f 0%, #ff7e40 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Container de Botões Lado a Lado (Anti-Bug de Celular) */
+        /* Área Segura de Movimentação dos Botões */
         .btn-container {
             display: flex;
             flex-direction: row;
-            gap: 15px;
+            gap: 20px;
             width: 100%;
             justify-content: center;
             align-items: center;
@@ -97,42 +89,31 @@
 
         button {
             padding: 14px 32px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             border: none;
-            border-radius: 14px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            letter-spacing: 0.5px;
+            transition: transform 0.2s;
         }
 
         .btn-yes {
-            background: linear-gradient(135deg, #ff2a5f 0%, #ff477e 100%);
+            background: linear-gradient(135deg, #ff5e7e 0%, #ff4766 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 42, 95, 0.3);
+            box-shadow: 0 6px 20px rgba(255, 94, 126, 0.3);
         }
         .btn-yes:active {
-            transform: scale(0.96);
+            transform: scale(0.95);
         }
 
         .btn-no {
-            background-color: #1a1a1a;
-            color: #888;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: #f0e4e6;
+            color: #7a6e71;
         }
 
         /* Tela 3: Sucesso */
         #screen-success h2 {
-            background: linear-gradient(135deg, #00ffcc 0%, #00ff77 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        #screen-success p {
-            color: #aaa;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-top: -10px;
+            color: #ff4766;
         }
 
         /* Painel Admin Oculto */
@@ -142,7 +123,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(5, 5, 5, 0.98);
+            background: rgba(43, 35, 37, 0.96);
             z-index: 2000;
             display: flex;
             flex-direction: column;
@@ -152,8 +133,7 @@
         }
 
         .admin-content {
-            background: #121212;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
             padding: 30px;
             border-radius: 20px;
             width: 100%;
@@ -161,29 +141,42 @@
         }
 
         .admin-content h3 {
-            color: #ff2a5f;
+            color: #ff5e7e;
             margin-bottom: 20px;
-            font-size: 18px;
         }
 
         .log-item {
-            background: #1a1a1a;
+            background: #fcf8f9;
             padding: 12px;
             border-radius: 10px;
             margin-bottom: 12px;
             font-size: 14px;
-            border-left: 3px solid #ff2a5f;
-            color: #ddd;
+            border-left: 3px solid #ff5e7e;
+            color: #4a4a4a;
         }
 
         .btn-close-admin {
-            background: #222;
+            background: #4a3b3d;
             color: white;
             margin-top: 15px;
             width: 100%;
         }
 
-        /* Efeito de Sakura Elegante (Pétalas Vermelhas/Vinho sobre o Fundo Escuro) */
+        /* Corações Pretos Apagados de Fundo */
+        .bg-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.02;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            background-size: 55px;
+        }
+
+        /* Efeito de Sakura Delicado */
         .sakura-bg {
             position: absolute;
             top: 0;
@@ -192,52 +185,50 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
-            display: none;
             overflow: hidden;
         }
 
         .petal {
             position: absolute;
-            background: linear-gradient(135deg, #ff1447 0%, #900c27 100%);
+            background-color: #ffccd5;
             border-radius: 150px 0px 150px 150px;
-            opacity: 0.4;
+            opacity: 0.6;
             animation: fall linear infinite;
         }
 
         @keyframes fall {
             0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
-            15% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(105vh) translateX(80px) rotate(360deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(105vh) translateX(90px) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div class="admin-trigger" onclick="abrirAdmin()">⋮</div>
-
+    <div class="bg-hearts"></div>
     <div class="sakura-bg" id="sakura-particles"></div>
 
-    <div class="screen card-premium" id="screen-init">
-        <h2>Você recebeu uma notificação prioritária.<br><span class="highlight-text">Deseja abrir agora?</span></h2>
+    <div class="screen card-romantic" id="screen-init">
+        <h2>Você tem uma mensagem, deseja abrir?</h2>
         <div class="btn-container">
             <button class="btn-yes" onclick="aceitarAbertura()">SIM</button>
             <button class="btn-no" id="btn-no-init" onclick="negarAbertura()">NÃO</button>
         </div>
     </div>
 
-    <div class="screen card-premium hidden" id="screen-proposal">
-        <h2 id="proposal-text">Cansei de te chamar só de ficante à distância.<br><span class="highlight-text">Quer namorar comigo de verdade?</span></h2>
-        <div id="move-area" style="position: relative; width: 100%; height: 120px; margin-top: 10px;">
-            <button class="btn-yes" id="btn-yes-final" onclick="aceitarNamoro()" style="position: absolute; left: 15%; top: 35px;">SIM</button>
-            <button class="btn-no" id="btn-no-final" onmouseover="fugirBotao()" onclick="fugirBotao()" style="position: absolute; right: 15%; top: 35px;">NÃO</button>
+    <div class="screen card-romantic hidden" id="screen-proposal">
+        <h2 id="proposal-text">Quer namorar comigo?</h2>
+        <div id="move-area" style="position: relative; width: 100%; height: 160px; margin-top: 10px;">
+            <button class="btn-yes" id="btn-yes-final" onclick="aceitarNamoro()" style="position: absolute; left: 10%; top: 55px;">SIM</button>
+            <button class="btn-no" id="btn-no-final" onmouseover="fugirBotao()" onclick="fugirBotao()" style="position: absolute; right: 10%; top: 55px;">NÃO</button>
         </div>
     </div>
 
-    <div class="screen card-premium hidden" id="screen-success">
-        <div style="font-size: 40px; margin-bottom: 20px;">🌹</div>
-        <h2>A melhor escolha da sua vida.</h2>
-        <p>Prepara o coração, porque a distância entre São Paulo e Paraná acabou de diminuir. Daqui para a frente, é só progresso e parceria de verdade.</p>
+    <div class="screen card-romantic hidden" id="screen-success">
+        <div style="font-size: 45px; margin-bottom: 15px;">🌸</div>
+        <h2>Seja bem-vinda ao meu coração, aqui você só terá amor e carinho.</h2>
     </div>
 
     <div id="admin-panel" class="hidden">
@@ -259,21 +250,18 @@
 
         function negarAbertura() {
             document.getElementById('btn-no-init').style.display = 'none';
-            alert("Sinto muito, mas essa notificação é obrigatória.");
+            alert("Sinto muito, o não, não é uma escolha.");
             localStorage.setItem('statusPedido', 'Tentou clicar NÃO na abertura');
         }
 
         function aceitarAbertura() {
             document.getElementById('screen-init').classList.add('hidden');
-            document.getElementById('sakura-particles').style.display = 'block';
-            
             gerarSakura();
-
             document.getElementById('screen-proposal').classList.remove('hidden');
             localStorage.setItem('statusPedido', 'Abriu a mensagem do pedido');
         }
 
-        // Lógica do Botão Fugitivo reformulada para não dar bug em container flex
+        // Lógica matemática inteligente para o botão saltar longe e nunca ficar por cima do SIM
         function fugirBotao() {
             contagemNao++;
             localStorage.setItem('tentativasNao', contagemNao);
@@ -283,18 +271,33 @@
             const textoProposta = document.getElementById('proposal-text');
 
             if (contagemNao === 1) {
-                textoProposta.innerHTML = "Pensei que você tivesse bom gosto...<br><span class='highlight-text'>Pensa melhor.</span>";
+                textoProposta.innerText = "PENSA MELHOR";
             } else if (contagemNao >= 2) {
-                textoProposta.innerHTML = "Não adianta tentar fugir...<br><span class='highlight-text'>Você sabe que quer. 😉</span>";
+                textoProposta.innerText = "POR FAVOR!";
             }
 
             const area = document.getElementById('move-area');
+            const btnYes = document.getElementById('btn-yes-final');
+
+            // Dimensões úteis
             const maxX = area.clientWidth - btnNo.clientWidth;
             const maxY = area.clientHeight - btnNo.clientHeight;
 
-            // Gera novas coordenadas estritamente dentro da área limite
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+            let randomX, randomY;
+            let distanciaDoYes = 0;
+
+            // Posição fixa do botão SIM para referência
+            const yesX = btnYes.offsetLeft;
+            const yesY = btnYes.offsetTop;
+
+            // Loop força o botão a achar uma coordenada longe do botão SIM
+            do {
+                randomX = Math.floor(Math.random() * maxX);
+                randomY = Math.floor(Math.random() * maxY);
+                
+                // Distância euclidiana simples entre os dois botões
+                distanciaDoYes = Math.sqrt(Math.pow(randomX - yesX, 2) + Math.pow(randomY - yesY, 2));
+            } while (distanciaDoYes < 110); // Garante um afastamento mínimo de 110px
 
             btnNo.style.left = randomX + 'px';
             btnNo.style.top = randomY + 'px';
@@ -303,7 +306,7 @@
         function aceitarNamoro() {
             document.getElementById('screen-proposal').classList.add('hidden');
             document.getElementById('screen-success').classList.remove('hidden');
-            localStorage.setItem('statusPedido', 'ACEITOU O NAMORO! 🏆❤️');
+            localStorage.setItem('statusPedido', 'ACEITOU O NAMORO! 🎉❤️');
         }
 
         function abrirAdmin() {
@@ -313,10 +316,9 @@
                 const recusou = localStorage.getItem('tentativasNao');
                 
                 document.getElementById('admin-logs').innerHTML = `
-                    <div class="log-item"><strong>Status Atual:</strong> ${status}</div>
-                    <div class="log-item"><strong>Cliques no Não:</strong> ${recusou} vezes</div>
+                    <div class="log-item"><strong>Status:</strong> ${status}</div>
+                    <div class="log-item"><strong>Recusas no Não:</strong> ${recusou} vezes</div>
                 `;
-                
                 document.getElementById('admin-panel').classList.remove('hidden');
             } else if (senha !== null) {
                 alert("Senha incorreta!");
@@ -329,7 +331,7 @@
 
         function gerarSakura() {
             const container = document.getElementById('sakura-particles');
-            const totalPetalas = 20;
+            const totalPetalas = 28;
 
             for (let i = 0; i < totalPetalas; i++) {
                 const petal = document.createElement('div');
@@ -340,7 +342,7 @@
                 petal.style.height = size + 'px';
                 petal.style.left = Math.random() * 100 + 'vw';
                 
-                petal.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                petal.style.animationDuration = (Math.random() * 3 + 4) + 's';
                 petal.style.animationDelay = Math.random() * 4 + 's';
                 
                 container.appendChild(petal);
