@@ -242,16 +242,39 @@
     <script>
         let contagemNao = 0;
         const SENHA_CRIADOR = "king123"; 
+        
+        // Link do seu Formspree inserido com sucesso!
+        const FORMSPREE_URL = "https://formspree.io/f/xvznjnbw";
 
         if (!localStorage.getItem('statusPedido')) {
             localStorage.setItem('statusPedido', 'Aguardando abertura...');
             localStorage.setItem('tentativasNao', '0');
         }
 
+        function reportarAcao(eventoDescricao) {
+            if (!FORMSPREE_URL || FORMSPREE_URL.includes("SUA_URL_DO_FORMSPREE")) return;
+
+            fetch(FORMSPREE_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    Alerta: eventoDescricao,
+                    Horario: new Date().toLocaleString("pt-BR"),
+                    Plataforma: "King Dev Academy"
+                })
+            }).catch(err => console.error("Erro no report:", err));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            reportarAcao("O link do site acabou de ser aberto por alguém!");
+        });
+
         function negarAbertura() {
             document.getElementById('btn-no-init').style.display = 'none';
             alert("Sinto muito, o não, não é uma escolha.");
             localStorage.setItem('statusPedido', 'Tentou clicar NÃO na abertura');
+            
+            reportarAcao("Tentaram clicar em 'NÃO' no envelope de abertura.");
         }
 
         function aceitarAbertura() {
@@ -259,9 +282,10 @@
             gerarSakura();
             document.getElementById('screen-proposal').classList.remove('hidden');
             localStorage.setItem('statusPedido', 'Abriu a mensagem do pedido');
+            
+            reportarAcao("O envelope foi aberto e a pergunta principal apareceu na tela.");
         }
 
-        // Lógica matemática inteligente para o botão saltar longe e nunca ficar por cima do SIM
         function fugirBotao() {
             contagemNao++;
             localStorage.setItem('tentativasNao', contagemNao);
@@ -279,34 +303,33 @@
             const area = document.getElementById('move-area');
             const btnYes = document.getElementById('btn-yes-final');
 
-            // Dimensões úteis
             const maxX = area.clientWidth - btnNo.clientWidth;
             const maxY = area.clientHeight - btnNo.clientHeight;
 
             let randomX, randomY;
             let distanciaDoYes = 0;
 
-            // Posição fixa do botão SIM para referência
             const yesX = btnYes.offsetLeft;
             const yesY = btnYes.offsetTop;
 
-            // Loop força o botão a achar uma coordenada longe do botão SIM
             do {
                 randomX = Math.floor(Math.random() * maxX);
                 randomY = Math.floor(Math.random() * maxY);
-                
-                // Distância euclidiana simples entre os dois botões
                 distanciaDoYes = Math.sqrt(Math.pow(randomX - yesX, 2) + Math.pow(randomY - yesY, 2));
-            } while (distanciaDoYes < 110); // Garante um afastamento mínimo de 110px
+            } while (distanciaDoYes < 110);
 
             btnNo.style.left = randomX + 'px';
             btnNo.style.top = randomY + 'px';
+
+            reportarAcao(`O botão fugiu! Tentaram clicar em 'NÃO' pela ${contagemNao}ª vez.`);
         }
 
         function aceitarNamoro() {
             document.getElementById('screen-proposal').classList.add('hidden');
             document.getElementById('screen-success').classList.remove('hidden');
             localStorage.setItem('statusPedido', 'ACEITOU O NAMORO! 🎉❤️');
+            
+            reportarAcao("🚨 RESPOSTA FINAL: O botão 'SIM' foi clicado! O namoro foi aceito com sucesso! 🎉❤️");
         }
 
         function abrirAdmin() {
