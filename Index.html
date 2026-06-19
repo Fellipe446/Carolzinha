@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma mensagem importante... 🌸</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Menu de 3 pontos do Criador */
+        .admin-trigger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+            z-index: 1000;
+            padding: 10px;
+            transition: color 0.3s;
+        }
+        .admin-trigger:hover {
+            color: #ffb7c5;
+        }
+
+        /* Telas Principais */
+        .screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+            padding: 30px;
+            border-radius: 20px;
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Tela 1: Inicial */
+        #screen-init {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
+            position: relative;
+            height: 50px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .btn-yes {
+            background-color: #ff477e;
+            color: white;
+        }
+        .btn-yes:active {
+            transform: scale(0.95);
+        }
+
+        .btn-no {
+            background-color: #333;
+            color: #ccc;
+        }
+
+        /* Tela 2: Pedido Sakura */
+        #screen-proposal {
+            background: rgba(255, 240, 245, 0.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid #ffb7c5;
+            box-shadow: 0 15px 35px rgba(255, 183, 197, 0.3);
+        }
+
+        #screen-proposal h2 {
+            color: #222;
+            font-weight: 800;
+            font-size: 26px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Tela 3: Sucesso */
+        #screen-success {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid #ff477e;
+            box-shadow: 0 0 30px rgba(255, 71, 126, 0.4);
+        }
+
+        #screen-success h2 {
+            color: #ff477e;
+            font-size: 24px;
+        }
+
+        #screen-success p {
+            color: #ddd;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* Painel Admin Oculto */
+        #admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.95);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .admin-content {
+            background: #1e1e1e;
+            border: 1px solid #ffb7c5;
+            padding: 25px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        .admin-content h3 {
+            color: #ffb7c5;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .log-item {
+            background: #2a2a2a;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            border-left: 4px solid #ff477e;
+        }
+
+        .btn-close-admin {
+            background: #444;
+            color: white;
+            margin-top: 15px;
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        /* Efeito de Sakura (Minecraft Inspired Particles) */
+        .sakura-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            display: none;
+            overflow: hidden;
+        }
+
+        /* Estilização dos Corações Pretos Apagados de Fundo */
+        .bg-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            display: none;
+            opacity: 0.04;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            background-size: 60px;
+        }
+
+        .petal {
+            position: absolute;
+            background-color: #ffb7c5;
+            border-radius: 150px 0px 150px 150px;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(105vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-trigger" onclick="abrirAdmin()">⋮</div>
+
+    <div class="bg-hearts" id="hearts-bg"></div>
+    <div class="sakura-bg" id="sakura-particles"></div>
+
+    <div class="screen" id="screen-init">
+        <h2>Você tem uma mensagem de texto pendente.<br>Deseja abrir?</h2>
+        <div class="btn-container">
+            <button class="btn-yes" onclick="aceitarAbertura()">SIM</button>
+            <button class="btn-no" id="btn-no-init" onclick="negarAbertura()">NÃO</button>
+        </div>
+    </div>
+
+    <div class="screen hidden" id="screen-proposal">
+        <h2 id="proposal-text">Quer namorar comigo?</h2>
+        <div class="btn-container" style="margin-top: 30px; height: 150px;">
+            <button class="btn-yes" id="btn-yes-final" onclick="aceitarNamoro()" style="position: absolute; z-index: 100;">SIM</button>
+            <button class="btn-no" id="btn-no-final" onmouseover="fugirBotao()" onclick="fugirBotao()" style="position: absolute; z-index: 100;">NÃO</button>
+        </div>
+    </div>
+
+    <div class="screen hidden" id="screen-success">
+        <div style="font-size: 50px; margin-bottom: 15px;">🌸❤️</div>
+        <h2>Seja bem-vinda ao meu coração!</h2>
+        <p style="margin-top: 15px;">Aqui você só terá amor, carinho e toda a atenção do mundo.</p>
+    </div>
+
+    <div id="admin-panel" class="hidden">
+        <div class="admin-content">
+            <h3>Painel de Controle 😎</h3>
+            <div id="admin-logs">
+                </div>
+            <button class="btn-close-admin" onclick="fecharAdmin()">Fechar Painel</button>
+        </div>
+    </div>
+
+    <script>
+        let contagemNao = 0;
+        const SENHA_CRIADOR = "king123"; // Mude sua senha aqui se quiser
+
+        // Inicializa logs locais no navegador
+        if (!localStorage.getItem('statusPedido')) {
+            localStorage.setItem('statusPedido', 'Aguardando abertura...');
+            localStorage.setItem('tentativasNao', '0');
+        }
+
+        // TELA 1: Lógica
+        function negarAbertura() {
+            document.getElementById('btn-no-init').style.display = 'none';
+            alert("Sinto muito, o não, não é uma escolha.");
+            localStorage.setItem('statusPedido', 'Tentou clicar NÃO na abertura');
+        }
+
+        function aceitarAbertura() {
+            document.getElementById('screen-init').classList.add('hidden');
+            
+            document.body.style.backgroundColor = '#fff0f5';
+            document.getElementById('hearts-bg').style.display = 'block';
+            document.getElementById('sakura-particles').style.display = 'block';
+            
+            gerarSakura();
+
+            document.getElementById('screen-proposal').classList.remove('hidden');
+            localStorage.setItem('statusPedido', 'Abriu a mensagem do pedido');
+        }
+
+        // TELA 2: Botão que foge
+        function fugirBotao() {
+            contagemNao++;
+            localStorage.setItem('tentativasNao', contagemNao);
+            localStorage.setItem('statusPedido', `Tentou recusar o namoro ${contagemNao} vez(es)`);
+
+            const btnNo = document.getElementById('btn-no-final');
+            const textoProposta = document.getElementById('proposal-text');
+
+            if (contagemNao === 1) {
+                textoProposta.innerText = "PENSA MELHOR...";
+            } else if (contagemNao >= 2) {
+                textoProposta.innerText = "POR FAVOR! 🥺";
+            }
+
+            const container = document.getElementById('screen-proposal');
+            const padraoMaxX = container.clientWidth - btnNo.clientWidth - 20;
+            const padraoMaxY = container.clientHeight - btnNo.clientHeight - 80;
+
+            const randomX = Math.floor(Math.random() * padraoMaxX) + 10;
+            const randomY = Math.floor(Math.random() * padraoMaxY) + 60;
+
+            btnNo.style.left = randomX + 'px';
+            btnNo.style.top = randomY + 'px';
+        }
+
+        function aceitarNamoro() {
+            document.getElementById('screen-proposal').classList.add('hidden');
+            document.getElementById('screen-success').classList.remove('hidden');
+            localStorage.setItem('statusPedido', 'ACEITOU O NAMORO! 🎉❤️');
+        }
+
+        // SISTEMA DE ADMINISTRAÇÃO (3 Pontos)
+        function abrirAdmin() {
+            let senha = prompt("Digite a senha do Criador:");
+            if (senha === SENHA_CRIADOR) {
+                const status = localStorage.getItem('statusPedido');
+                const recusou = localStorage.getItem('tentativasNao');
+                
+                document.getElementById('admin-logs').innerHTML = `
+                    <div class="log-item"><strong>Status Atual:</strong> ${status}</div>
+                    <div class="log-item"><strong>Cliques no Não:</strong> ${recusou} vezes</div>
+                `;
+                
+                document.getElementById('admin-panel').classList.remove('hidden');
+            } else if (senha !== null) {
+                alert("Senha incorreta, irmão!");
+            }
+        }
+
+        function fecharAdmin() {
+            document.getElementById('admin-panel').classList.add('hidden');
+        }
+
+        // Gerador de Partículas de Sakura
+        function gerarSakura() {
+            const container = document.getElementById('sakura-particles');
+            const totalPetalas = 25;
+
+            for (let i = 0; i < totalPetalas; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                
+                const size = Math.random() * 8 + 6; 
+                petal.style.width = size + 'px';
+                petal.style.height = size + 'px';
+                petal.style.left = Math.random() * 100 + 'vw';
+                
+                petal.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                
+                container.appendChild(petal);
+            }
+        }
+    </script>
+</body>
+      </html>
+      
